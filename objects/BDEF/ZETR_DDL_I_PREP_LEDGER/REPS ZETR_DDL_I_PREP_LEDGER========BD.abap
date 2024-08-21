@@ -14,7 +14,9 @@ authorization master ( instance )
 
   field ( readonly ) bukrs, gjahr, monat;
 }
-define behavior for zetr_ddl_i_prep_ledger_detail //alias <alias_name>
+
+
+define behavior for zetr_ddl_i_prep_ledger_detail //alias _prepLedgerDetail
 //late numbering
 lock dependent by _PrepLedger
 authorization dependent by _PrepLedger

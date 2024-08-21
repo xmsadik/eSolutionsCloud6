@@ -5,7 +5,7 @@
               lt_gjahr_range TYPE RANGE OF gjahr,
               lt_monat_range TYPE RANGE OF monat,
               lt_output      TYPE TABLE OF zetr_ddl_i_prep_ledger,
-              ls_output      TYPE   zetr_ddl_i_prep_ledger.
+              ls_output      TYPE zetr_ddl_i_prep_ledger.
         DATA(lt_paging) = io_request->get_paging( ).
 
         LOOP AT lt_filter INTO DATA(ls_filter).
@@ -61,17 +61,6 @@
           RECEIVING
             rs_balance      = ls_balance
          ).
-
-*DATA :  mt_account_balances TYPE zinf_tt_bapi1028_4.
-*
-*    zinf_trial_balance_service=>trigger_trial_balance_service(
-*      EXPORTING
-*        iv_company_code = '1000'
-*        iv_ledger       = '0L'
-*        iv_gjahr        = '2024'
-*      RECEIVING
-*        rt_balance      = mt_account_balances
-*    ).
 
 
       CATCH cx_rap_query_filter_no_range.
