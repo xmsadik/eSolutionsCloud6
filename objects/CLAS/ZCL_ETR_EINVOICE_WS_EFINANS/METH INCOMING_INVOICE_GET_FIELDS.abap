@@ -30,6 +30,7 @@
                   lv_xml_tag = ls_xml_line-name.
             IF lv_regex IS NOT INITIAL.
               FIND REGEX lv_regex IN ls_xml_line-value SUBMATCHES lv_submatch.
+              CHECK sy-subrc = 0.
             ELSE.
               lv_submatch = ls_xml_line-value.
             ENDIF.

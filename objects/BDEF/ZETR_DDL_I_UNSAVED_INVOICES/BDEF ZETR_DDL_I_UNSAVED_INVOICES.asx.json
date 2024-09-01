@@ -1,5 +1,17 @@
 [
  {
+  "table":"BDEF_WBDATA",
+  "data":
+  [
+   {
+    "BDEF":"ZETR_DDL_I_UNSAVED_INVOICES",
+    "R3STATE":"A",
+    "KIND":"T",
+    "VALUE":"Unmanaged"
+   }
+  ]
+ },
+ {
   "table":"TADIR",
   "data":
   [

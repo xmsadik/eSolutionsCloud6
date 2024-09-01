@@ -9,7 +9,7 @@
     "AS4USER":"SAP_CUSTOMER",
     "AS4DATE":"0000-00-00",
     "AS4TIME":"00:00:00",
-    "SOURCE":"@EndUserText.label: 'Prepare Ledger Details'\r\n@ObjectModel.query.implementedBy:'ABAP:ZCL_ETR_PREP_LEDGER'\r\n//@Search.searchable: true\r\n@UI:{\r\n\r\nheaderInfo:{\r\n                typeNamePlural: 'Prepare Ledger',\r\n                typeName: 'Prepare Ledger',\r\n                title:{ type: #STANDARD, label: 'Prepare Ledger Details', value: 'bukrs' }\r\n           }\r\n}\r\ndefine custom entity zetr_ddl_i_prep_ledger_detail\r\n  // with parameters parameter_name : parameter_type\r\n{\r\n      @UI.facet   : [ { id:           'Ledger',\r\n                     purpose:         #STANDARD,\r\n                     type:            #IDENTIFICATION_REFERENCE,\r\n                     label:           'Ledger Details',\r\n                     position:        10 } ]\r\n      @UI         : { lineItem:     [ { position: 1, importance: #HIGH } ],\r\n                identification: [{ position: 1 }] }\r\n      @Consumption.valueHelpDefinition: [ { entity: { name: 'I_CompanyCodeVH', element: 'CompanyCode' }}]\r\n  key bukrs       : bukrs;\r\n\r\n      @UI         : { lineItem:     [ { position: 2, importance: #HIGH  } ],\r\n                identification: [{ position: 2 }]  }\r\n  key gjahr       : gjahr;\r\n\r\n      @UI         : { lineItem:     [ { position: 3 } ],\r\n                identification: [{ position: 3 }] }\r\n  key monat       : monat;\r\n\r\n      @UI         : { lineItem:       [ { position: 4, label: 'Mizan Borç Toplam Tutarı' } ],\r\n      identification: [{ position: 4, label: 'Mizan Borç Toplam Tutarı' }]}\r\n      @Semantics.amount.currencyCode: 'waers'\r\n      stdebit     : zetr_e_edf_dmbtr;\r\n\r\n      @UI         : { lineItem:       [ { position: 5 , label: 'Mizan Alacak Toplam Tutarı' } ],\r\n      identification: [{ position: 5 , label: 'Mizan Alacak Toplam Tutarı'  }]}\r\n      @Semantics.amount.currencyCode: 'waers'\r\n      stcrdit     : zetr_e_edf_dmbtr;\r\n\r\n      @UI         : { lineItem:       [ { position: 6 , label: 'Borç Toplamı Tutarı' } ],\r\n      identification: [{ position: 6 , label: 'Borç Toplamı Tutarı'  }]}\r\n      @Semantics.amount.currencyCode: 'waers'\r\n      tdebit      : zetr_e_edf_dmbtr;\r\n\r\n      @UI         : { lineItem:       [ { position: 7 , label: 'Alacak Toplamı Tutarı' } ],\r\n      identification: [{ position: 7 , label: 'Alacak Toplamı Tutarı'  }]}\r\n      @Semantics.amount.currencyCode: 'waers'\r\n      tcrdit      : zetr_e_edf_dmbtr;\r\n\r\n      @UI         : { lineItem:       [ { position: 8 , label: 'Mali Yıl Parça Bilgisi' } ],\r\n      identification: [{ position: 8 , label: 'Mali Yıl Parça Bilgisi'  }]}\r\n      spart       : abap.numc( 10 );\r\n\r\n      @UI         : { lineItem:       [ { position: 9 , label: 'Toplam Parça Sayıs' } ],\r\n      identification: [{ position: 9 , label: 'Toplam Parça Sayıs'  }]}\r\n      TPART       : abap.numc( 10 );\r\n\r\n      @UI         : { lineItem:       [ { position: 10 , label: 'Mali Yıl Satır Bilgis' } ],\r\n      identification: [{ position: 10 , label: 'Mali Yıl Satır Bilgis'  }]}\r\n      SLINEN      : abap.numc( 10 );\r\n\r\n      @UI         : { lineItem:       [ { position: 11 , label: 'Mali Yıl Yeymiye Bilgisi' } ],\r\n      identification: [{ position: 11 , label: 'Mali Yıl Yeymiye Bilgisi'  }]}\r\n      SYEVNO      : abap.numc( 10 );\r\n\r\n      waers       : waers;\r\n\r\n      _PrepLedger : association to parent zetr_ddl_i_prep_ledger on  $projection.bukrs = _PrepLedger.bukrs\r\n                                                                 and $projection.gjahr = _PrepLedger.gjahr\r\n                                                                 and $projection.monat = _PrepLedger.monat;\r\n\r\n      //\r\n\r\n\r\n\r\n\r\n}\r\n/*+[internal] {\n\"BASEINFO\":\n{\n\"FROM\":\n[],\n\"ASSOCIATED\":\n[\n\"ZETR_DDL_I_PREP_LEDGER\"\n],\n\"BASE\":\n[],\n\"ANNO_REF\":\n[],\n\"SCALAR_FUNCTION\":\n[],\n\"VERSION\":0,\n\"ANNOREF_EVALUATION_ERROR\":\"\"\n}\n}*/",
+    "SOURCE":"@EndUserText.label: 'Prepare Ledger Details'\r\n@ObjectModel.query.implementedBy:'ABAP:ZCL_ETR_PREP_LEDGER'\r\n//@Search.searchable: true\r\n@UI:{\r\n\r\nheaderInfo:{\r\n                typeNamePlural: 'Prepare Ledger Details',\r\n                typeName: 'Prepare Ledger',\r\n                title:{ type: #STANDARD, label: 'Prepare Ledger Details', value: 'bukrs' }\r\n           }\r\n}\r\ndefine custom entity zetr_ddl_i_prep_ledger_detail\r\n  // with parameters parameter_name : parameter_type\r\n{\r\n\r\n      @UI.facet   : [ { id:           'LedgerDetail',\r\n                     purpose:         #STANDARD,\r\n                     type:            #FIELDGROUP_REFERENCE,\r\n                     label:           'Ledger Details',\r\n                     position:        10 } ]\r\n                     \r\n      @UI         : { identification:       [ { position: 1, importance: #HIGH } ] }\r\n      //                      identification: [{  position: 1 }] }\r\n      @Consumption.valueHelpDefinition: [ { entity: { name: 'I_CompanyCodeVH', element: 'CompanyCode' }}]\r\n  key bukrs       : bukrs;\r\n\r\n      @UI         : { identification:       [ { position: 2, importance: #HIGH  } ] }\r\n      //                      identification: [ { position: 2 }]  }\r\n  key gjahr       : gjahr;\r\n\r\n      @UI         : { identification:       [ { position: 3, importance: #HIGH  } ]}\r\n      //                      identification: [ { position: 3 }] }\r\n  key monat       : monat;\r\n\r\n      @UI         : { identification:       [ { position: 4, label: 'Mizan Borç Toplam Tutarı' } ]}\r\n      //                      identification: [ { position: 4, label: 'Mizan Borç Toplam Tutarı' }]}\r\n      @Semantics.amount.currencyCode: 'waers'\r\n      stdebit     : zetr_e_edf_dmbtr;\r\n\r\n      @UI         : { identification:       [ { position: 5 , label: 'Mizan Alacak Toplam Tutarı' } ]}\r\n      //                      identification: [ { position: 5 , label: 'Mizan Alacak Toplam Tutarı'  }]}\r\n      @Semantics.amount.currencyCode: 'waers'\r\n      stcrdit     : zetr_e_edf_dmbtr;\r\n\r\n      @UI         : { identification:       [ { position: 6 , label: 'Borç Toplamı Tutarı' } ]}\r\n      //                      identification: [ { position: 6 , label: 'Borç Toplamı Tutarı'  }]}\r\n      @Semantics.amount.currencyCode: 'waers'\r\n      tdebit      : zetr_e_edf_dmbtr;\r\n\r\n      @UI         : { identification:       [ { position: 7 , label: 'Alacak Toplamı Tutarı' } ]}\r\n      //                      identification: [ { position: 7 , label: 'Alacak Toplamı Tutarı'  }]}\r\n      @Semantics.amount.currencyCode: 'waers'\r\n      tcrdit      : zetr_e_edf_dmbtr;\r\n\r\n      @UI         : { identification:       [ { position: 8 , label: 'Mali Yıl Parça Bilgisi' } ]}\r\n      //                      identification: [ { position: 8 , label: 'Mali Yıl Parça Bilgisi'  }]}\r\n      spart       : abap.numc( 10 );\r\n\r\n      @UI         : { identification:       [ { position: 9 , label: 'Toplam Parça Sayıs' } ]}\r\n      //                      identification: [ { position: 9 , label: 'Toplam Parça Sayıs'  }]}\r\n      TPART       : abap.numc( 10 );\r\n\r\n      @UI         : { identification:       [ { position: 10 , label: 'Mali Yıl Satır Bilgis' } ]}\r\n      //                      identification: [ { position: 10 , label: 'Mali Yıl Satır Bilgis'  }]}\r\n      SLINEN      : abap.numc( 10 );\r\n\r\n      @UI         : { identification:       [ { position: 11 , label: 'Mali Yıl Yeymiye Bilgisi' } ]}\r\n      //                      identification: [ { position: 11 , label: 'Mali Yıl Yeymiye Bilgisi'  }]}\r\n      SYEVNO      : abap.numc( 10 );\r\n\r\n      waers       : waers;\r\n\r\n      _PrepLedger : association to parent zetr_ddl_i_prep_ledger on  $projection.bukrs = _PrepLedger.bukrs\r\n                                                                 and $projection.gjahr = _PrepLedger.gjahr\r\n                                                                 and $projection.monat = _PrepLedger.monat;\r\n\r\n\r\n\r\n\r\n\r\n}\r\n/*+[internal] {\n\"BASEINFO\":\n{\n\"FROM\":\n[],\n\"ASSOCIATED\":\n[\n\"ZETR_DDL_I_PREP_LEDGER\"\n],\n\"BASE\":\n[],\n\"ANNO_REF\":\n[],\n\"SCALAR_FUNCTION\":\n[],\n\"VERSION\":0,\n\"ANNOREF_EVALUATION_ERROR\":\"\"\n}\n}*/",
     "PARENTNAME":"",
     "ACTFLAG":"",
     "CHGFLAG":"",
@@ -154,28 +154,28 @@
     "STRUCOBJN":"ZETR_DDL_I_PREP_LEDGER_DETAIL",
     "LFIELDNAME":"BUKRS",
     "NAME":"CONSUMPTION",
-    "POSITION":11,
+    "POSITION":10,
     "VALUE":""
    },
    {
     "STRUCOBJN":"ZETR_DDL_I_PREP_LEDGER_DETAIL",
     "LFIELDNAME":"BUKRS",
     "NAME":"CONSUMPTION.VALUEHELPDEFINITION$1$.ENTITY",
-    "POSITION":12,
+    "POSITION":11,
     "VALUE":""
    },
    {
     "STRUCOBJN":"ZETR_DDL_I_PREP_LEDGER_DETAIL",
     "LFIELDNAME":"BUKRS",
     "NAME":"CONSUMPTION.VALUEHELPDEFINITION$1$.ENTITY.ELEMENT",
-    "POSITION":14,
+    "POSITION":13,
     "VALUE":"'CompanyCode'"
    },
    {
     "STRUCOBJN":"ZETR_DDL_I_PREP_LEDGER_DETAIL",
     "LFIELDNAME":"BUKRS",
     "NAME":"CONSUMPTION.VALUEHELPDEFINITION$1$.ENTITY.NAME",
-    "POSITION":13,
+    "POSITION":12,
     "VALUE":"'I_CompanyCodeVH'"
    },
    {
@@ -197,7 +197,7 @@
     "LFIELDNAME":"BUKRS",
     "NAME":"UI.FACET$1$.ID",
     "POSITION":2,
-    "VALUE":"'Ledger'"
+    "VALUE":"'LedgerDetail'"
    },
    {
     "STRUCOBJN":"ZETR_DDL_I_PREP_LEDGER_DETAIL",
@@ -225,26 +225,19 @@
     "LFIELDNAME":"BUKRS",
     "NAME":"UI.FACET$1$.TYPE",
     "POSITION":4,
-    "VALUE":"#IDENTIFICATION_REFERENCE"
+    "VALUE":"#FIELDGROUP_REFERENCE"
    },
    {
     "STRUCOBJN":"ZETR_DDL_I_PREP_LEDGER_DETAIL",
     "LFIELDNAME":"BUKRS",
-    "NAME":"UI.IDENTIFICATION$1$.POSITION",
-    "POSITION":10,
-    "VALUE":"1"
-   },
-   {
-    "STRUCOBJN":"ZETR_DDL_I_PREP_LEDGER_DETAIL",
-    "LFIELDNAME":"BUKRS",
-    "NAME":"UI.LINEITEM$1$.IMPORTANCE",
+    "NAME":"UI.IDENTIFICATION$1$.IMPORTANCE",
     "POSITION":9,
     "VALUE":"#HIGH"
    },
    {
     "STRUCOBJN":"ZETR_DDL_I_PREP_LEDGER_DETAIL",
     "LFIELDNAME":"BUKRS",
-    "NAME":"UI.LINEITEM$1$.POSITION",
+    "NAME":"UI.IDENTIFICATION$1$.POSITION",
     "POSITION":8,
     "VALUE":"1"
    },
@@ -252,385 +245,266 @@
     "STRUCOBJN":"ZETR_DDL_I_PREP_LEDGER_DETAIL",
     "LFIELDNAME":"GJAHR",
     "NAME":"UI",
-    "POSITION":15,
+    "POSITION":14,
     "VALUE":""
    },
    {
     "STRUCOBJN":"ZETR_DDL_I_PREP_LEDGER_DETAIL",
     "LFIELDNAME":"GJAHR",
-    "NAME":"UI.IDENTIFICATION$1$.POSITION",
-    "POSITION":18,
-    "VALUE":"2"
-   },
-   {
-    "STRUCOBJN":"ZETR_DDL_I_PREP_LEDGER_DETAIL",
-    "LFIELDNAME":"GJAHR",
-    "NAME":"UI.LINEITEM$1$.IMPORTANCE",
-    "POSITION":17,
+    "NAME":"UI.IDENTIFICATION$1$.IMPORTANCE",
+    "POSITION":16,
     "VALUE":"#HIGH"
    },
    {
     "STRUCOBJN":"ZETR_DDL_I_PREP_LEDGER_DETAIL",
     "LFIELDNAME":"GJAHR",
-    "NAME":"UI.LINEITEM$1$.POSITION",
-    "POSITION":16,
+    "NAME":"UI.IDENTIFICATION$1$.POSITION",
+    "POSITION":15,
     "VALUE":"2"
    },
    {
     "STRUCOBJN":"ZETR_DDL_I_PREP_LEDGER_DETAIL",
     "LFIELDNAME":"MONAT",
     "NAME":"UI",
-    "POSITION":19,
+    "POSITION":17,
     "VALUE":""
    },
    {
     "STRUCOBJN":"ZETR_DDL_I_PREP_LEDGER_DETAIL",
     "LFIELDNAME":"MONAT",
+    "NAME":"UI.IDENTIFICATION$1$.IMPORTANCE",
+    "POSITION":19,
+    "VALUE":"#HIGH"
+   },
+   {
+    "STRUCOBJN":"ZETR_DDL_I_PREP_LEDGER_DETAIL",
+    "LFIELDNAME":"MONAT",
+    "NAME":"UI.IDENTIFICATION$1$.POSITION",
+    "POSITION":18,
+    "VALUE":"3"
+   },
+   {
+    "STRUCOBJN":"ZETR_DDL_I_PREP_LEDGER_DETAIL",
+    "LFIELDNAME":"SLINEN",
+    "NAME":"UI",
+    "POSITION":46,
+    "VALUE":""
+   },
+   {
+    "STRUCOBJN":"ZETR_DDL_I_PREP_LEDGER_DETAIL",
+    "LFIELDNAME":"SLINEN",
+    "NAME":"UI.IDENTIFICATION$1$.LABEL",
+    "POSITION":48,
+    "VALUE":"'Mali Yıl Satır Bilgis'"
+   },
+   {
+    "STRUCOBJN":"ZETR_DDL_I_PREP_LEDGER_DETAIL",
+    "LFIELDNAME":"SLINEN",
+    "NAME":"UI.IDENTIFICATION$1$.POSITION",
+    "POSITION":47,
+    "VALUE":"10"
+   },
+   {
+    "STRUCOBJN":"ZETR_DDL_I_PREP_LEDGER_DETAIL",
+    "LFIELDNAME":"SPART",
+    "NAME":"UI",
+    "POSITION":40,
+    "VALUE":""
+   },
+   {
+    "STRUCOBJN":"ZETR_DDL_I_PREP_LEDGER_DETAIL",
+    "LFIELDNAME":"SPART",
+    "NAME":"UI.IDENTIFICATION$1$.LABEL",
+    "POSITION":42,
+    "VALUE":"'Mali Yıl Parça Bilgisi'"
+   },
+   {
+    "STRUCOBJN":"ZETR_DDL_I_PREP_LEDGER_DETAIL",
+    "LFIELDNAME":"SPART",
+    "NAME":"UI.IDENTIFICATION$1$.POSITION",
+    "POSITION":41,
+    "VALUE":"8"
+   },
+   {
+    "STRUCOBJN":"ZETR_DDL_I_PREP_LEDGER_DETAIL",
+    "LFIELDNAME":"STCRDIT",
+    "NAME":"SEMANTICS",
+    "POSITION":28,
+    "VALUE":""
+   },
+   {
+    "STRUCOBJN":"ZETR_DDL_I_PREP_LEDGER_DETAIL",
+    "LFIELDNAME":"STCRDIT",
+    "NAME":"SEMANTICS.AMOUNT.CURRENCYCODE",
+    "POSITION":29,
+    "VALUE":"'waers'"
+   },
+   {
+    "STRUCOBJN":"ZETR_DDL_I_PREP_LEDGER_DETAIL",
+    "LFIELDNAME":"STCRDIT",
+    "NAME":"UI",
+    "POSITION":25,
+    "VALUE":""
+   },
+   {
+    "STRUCOBJN":"ZETR_DDL_I_PREP_LEDGER_DETAIL",
+    "LFIELDNAME":"STCRDIT",
+    "NAME":"UI.IDENTIFICATION$1$.LABEL",
+    "POSITION":27,
+    "VALUE":"'Mizan Alacak Toplam Tutarı'"
+   },
+   {
+    "STRUCOBJN":"ZETR_DDL_I_PREP_LEDGER_DETAIL",
+    "LFIELDNAME":"STCRDIT",
+    "NAME":"UI.IDENTIFICATION$1$.POSITION",
+    "POSITION":26,
+    "VALUE":"5"
+   },
+   {
+    "STRUCOBJN":"ZETR_DDL_I_PREP_LEDGER_DETAIL",
+    "LFIELDNAME":"STDEBIT",
+    "NAME":"SEMANTICS",
+    "POSITION":23,
+    "VALUE":""
+   },
+   {
+    "STRUCOBJN":"ZETR_DDL_I_PREP_LEDGER_DETAIL",
+    "LFIELDNAME":"STDEBIT",
+    "NAME":"SEMANTICS.AMOUNT.CURRENCYCODE",
+    "POSITION":24,
+    "VALUE":"'waers'"
+   },
+   {
+    "STRUCOBJN":"ZETR_DDL_I_PREP_LEDGER_DETAIL",
+    "LFIELDNAME":"STDEBIT",
+    "NAME":"UI",
+    "POSITION":20,
+    "VALUE":""
+   },
+   {
+    "STRUCOBJN":"ZETR_DDL_I_PREP_LEDGER_DETAIL",
+    "LFIELDNAME":"STDEBIT",
+    "NAME":"UI.IDENTIFICATION$1$.LABEL",
+    "POSITION":22,
+    "VALUE":"'Mizan Borç Toplam Tutarı'"
+   },
+   {
+    "STRUCOBJN":"ZETR_DDL_I_PREP_LEDGER_DETAIL",
+    "LFIELDNAME":"STDEBIT",
     "NAME":"UI.IDENTIFICATION$1$.POSITION",
     "POSITION":21,
-    "VALUE":"3"
-   },
-   {
-    "STRUCOBJN":"ZETR_DDL_I_PREP_LEDGER_DETAIL",
-    "LFIELDNAME":"MONAT",
-    "NAME":"UI.LINEITEM$1$.POSITION",
-    "POSITION":20,
-    "VALUE":"3"
-   },
-   {
-    "STRUCOBJN":"ZETR_DDL_I_PREP_LEDGER_DETAIL",
-    "LFIELDNAME":"SLINEN",
-    "NAME":"UI",
-    "POSITION":60,
-    "VALUE":""
-   },
-   {
-    "STRUCOBJN":"ZETR_DDL_I_PREP_LEDGER_DETAIL",
-    "LFIELDNAME":"SLINEN",
-    "NAME":"UI.IDENTIFICATION$1$.LABEL",
-    "POSITION":64,
-    "VALUE":"'Mali Yıl Satır Bilgis'"
-   },
-   {
-    "STRUCOBJN":"ZETR_DDL_I_PREP_LEDGER_DETAIL",
-    "LFIELDNAME":"SLINEN",
-    "NAME":"UI.IDENTIFICATION$1$.POSITION",
-    "POSITION":63,
-    "VALUE":"10"
-   },
-   {
-    "STRUCOBJN":"ZETR_DDL_I_PREP_LEDGER_DETAIL",
-    "LFIELDNAME":"SLINEN",
-    "NAME":"UI.LINEITEM$1$.LABEL",
-    "POSITION":62,
-    "VALUE":"'Mali Yıl Satır Bilgis'"
-   },
-   {
-    "STRUCOBJN":"ZETR_DDL_I_PREP_LEDGER_DETAIL",
-    "LFIELDNAME":"SLINEN",
-    "NAME":"UI.LINEITEM$1$.POSITION",
-    "POSITION":61,
-    "VALUE":"10"
-   },
-   {
-    "STRUCOBJN":"ZETR_DDL_I_PREP_LEDGER_DETAIL",
-    "LFIELDNAME":"SPART",
-    "NAME":"UI",
-    "POSITION":50,
-    "VALUE":""
-   },
-   {
-    "STRUCOBJN":"ZETR_DDL_I_PREP_LEDGER_DETAIL",
-    "LFIELDNAME":"SPART",
-    "NAME":"UI.IDENTIFICATION$1$.LABEL",
-    "POSITION":54,
-    "VALUE":"'Mali Yıl Parça Bilgisi'"
-   },
-   {
-    "STRUCOBJN":"ZETR_DDL_I_PREP_LEDGER_DETAIL",
-    "LFIELDNAME":"SPART",
-    "NAME":"UI.IDENTIFICATION$1$.POSITION",
-    "POSITION":53,
-    "VALUE":"8"
-   },
-   {
-    "STRUCOBJN":"ZETR_DDL_I_PREP_LEDGER_DETAIL",
-    "LFIELDNAME":"SPART",
-    "NAME":"UI.LINEITEM$1$.LABEL",
-    "POSITION":52,
-    "VALUE":"'Mali Yıl Parça Bilgisi'"
-   },
-   {
-    "STRUCOBJN":"ZETR_DDL_I_PREP_LEDGER_DETAIL",
-    "LFIELDNAME":"SPART",
-    "NAME":"UI.LINEITEM$1$.POSITION",
-    "POSITION":51,
-    "VALUE":"8"
-   },
-   {
-    "STRUCOBJN":"ZETR_DDL_I_PREP_LEDGER_DETAIL",
-    "LFIELDNAME":"STCRDIT",
-    "NAME":"SEMANTICS",
-    "POSITION":34,
-    "VALUE":""
-   },
-   {
-    "STRUCOBJN":"ZETR_DDL_I_PREP_LEDGER_DETAIL",
-    "LFIELDNAME":"STCRDIT",
-    "NAME":"SEMANTICS.AMOUNT.CURRENCYCODE",
-    "POSITION":35,
-    "VALUE":"'waers'"
-   },
-   {
-    "STRUCOBJN":"ZETR_DDL_I_PREP_LEDGER_DETAIL",
-    "LFIELDNAME":"STCRDIT",
-    "NAME":"UI",
-    "POSITION":29,
-    "VALUE":""
-   },
-   {
-    "STRUCOBJN":"ZETR_DDL_I_PREP_LEDGER_DETAIL",
-    "LFIELDNAME":"STCRDIT",
-    "NAME":"UI.IDENTIFICATION$1$.LABEL",
-    "POSITION":33,
-    "VALUE":"'Mizan Alacak Toplam Tutarı'"
-   },
-   {
-    "STRUCOBJN":"ZETR_DDL_I_PREP_LEDGER_DETAIL",
-    "LFIELDNAME":"STCRDIT",
-    "NAME":"UI.IDENTIFICATION$1$.POSITION",
-    "POSITION":32,
-    "VALUE":"5"
-   },
-   {
-    "STRUCOBJN":"ZETR_DDL_I_PREP_LEDGER_DETAIL",
-    "LFIELDNAME":"STCRDIT",
-    "NAME":"UI.LINEITEM$1$.LABEL",
-    "POSITION":31,
-    "VALUE":"'Mizan Alacak Toplam Tutarı'"
-   },
-   {
-    "STRUCOBJN":"ZETR_DDL_I_PREP_LEDGER_DETAIL",
-    "LFIELDNAME":"STCRDIT",
-    "NAME":"UI.LINEITEM$1$.POSITION",
-    "POSITION":30,
-    "VALUE":"5"
-   },
-   {
-    "STRUCOBJN":"ZETR_DDL_I_PREP_LEDGER_DETAIL",
-    "LFIELDNAME":"STDEBIT",
-    "NAME":"SEMANTICS",
-    "POSITION":27,
-    "VALUE":""
-   },
-   {
-    "STRUCOBJN":"ZETR_DDL_I_PREP_LEDGER_DETAIL",
-    "LFIELDNAME":"STDEBIT",
-    "NAME":"SEMANTICS.AMOUNT.CURRENCYCODE",
-    "POSITION":28,
-    "VALUE":"'waers'"
-   },
-   {
-    "STRUCOBJN":"ZETR_DDL_I_PREP_LEDGER_DETAIL",
-    "LFIELDNAME":"STDEBIT",
-    "NAME":"UI",
-    "POSITION":22,
-    "VALUE":""
-   },
-   {
-    "STRUCOBJN":"ZETR_DDL_I_PREP_LEDGER_DETAIL",
-    "LFIELDNAME":"STDEBIT",
-    "NAME":"UI.IDENTIFICATION$1$.LABEL",
-    "POSITION":26,
-    "VALUE":"'Mizan Borç Toplam Tutarı'"
-   },
-   {
-    "STRUCOBJN":"ZETR_DDL_I_PREP_LEDGER_DETAIL",
-    "LFIELDNAME":"STDEBIT",
-    "NAME":"UI.IDENTIFICATION$1$.POSITION",
-    "POSITION":25,
-    "VALUE":"4"
-   },
-   {
-    "STRUCOBJN":"ZETR_DDL_I_PREP_LEDGER_DETAIL",
-    "LFIELDNAME":"STDEBIT",
-    "NAME":"UI.LINEITEM$1$.LABEL",
-    "POSITION":24,
-    "VALUE":"'Mizan Borç Toplam Tutarı'"
-   },
-   {
-    "STRUCOBJN":"ZETR_DDL_I_PREP_LEDGER_DETAIL",
-    "LFIELDNAME":"STDEBIT",
-    "NAME":"UI.LINEITEM$1$.POSITION",
-    "POSITION":23,
     "VALUE":"4"
    },
    {
     "STRUCOBJN":"ZETR_DDL_I_PREP_LEDGER_DETAIL",
     "LFIELDNAME":"SYEVNO",
     "NAME":"UI",
-    "POSITION":65,
-    "VALUE":""
-   },
-   {
-    "STRUCOBJN":"ZETR_DDL_I_PREP_LEDGER_DETAIL",
-    "LFIELDNAME":"SYEVNO",
-    "NAME":"UI.IDENTIFICATION$1$.LABEL",
-    "POSITION":69,
-    "VALUE":"'Mali Yıl Yeymiye Bilgisi'"
-   },
-   {
-    "STRUCOBJN":"ZETR_DDL_I_PREP_LEDGER_DETAIL",
-    "LFIELDNAME":"SYEVNO",
-    "NAME":"UI.IDENTIFICATION$1$.POSITION",
-    "POSITION":68,
-    "VALUE":"11"
-   },
-   {
-    "STRUCOBJN":"ZETR_DDL_I_PREP_LEDGER_DETAIL",
-    "LFIELDNAME":"SYEVNO",
-    "NAME":"UI.LINEITEM$1$.LABEL",
-    "POSITION":67,
-    "VALUE":"'Mali Yıl Yeymiye Bilgisi'"
-   },
-   {
-    "STRUCOBJN":"ZETR_DDL_I_PREP_LEDGER_DETAIL",
-    "LFIELDNAME":"SYEVNO",
-    "NAME":"UI.LINEITEM$1$.POSITION",
-    "POSITION":66,
-    "VALUE":"11"
-   },
-   {
-    "STRUCOBJN":"ZETR_DDL_I_PREP_LEDGER_DETAIL",
-    "LFIELDNAME":"TCRDIT",
-    "NAME":"SEMANTICS",
-    "POSITION":48,
-    "VALUE":""
-   },
-   {
-    "STRUCOBJN":"ZETR_DDL_I_PREP_LEDGER_DETAIL",
-    "LFIELDNAME":"TCRDIT",
-    "NAME":"SEMANTICS.AMOUNT.CURRENCYCODE",
     "POSITION":49,
+    "VALUE":""
+   },
+   {
+    "STRUCOBJN":"ZETR_DDL_I_PREP_LEDGER_DETAIL",
+    "LFIELDNAME":"SYEVNO",
+    "NAME":"UI.IDENTIFICATION$1$.LABEL",
+    "POSITION":51,
+    "VALUE":"'Mali Yıl Yeymiye Bilgisi'"
+   },
+   {
+    "STRUCOBJN":"ZETR_DDL_I_PREP_LEDGER_DETAIL",
+    "LFIELDNAME":"SYEVNO",
+    "NAME":"UI.IDENTIFICATION$1$.POSITION",
+    "POSITION":50,
+    "VALUE":"11"
+   },
+   {
+    "STRUCOBJN":"ZETR_DDL_I_PREP_LEDGER_DETAIL",
+    "LFIELDNAME":"TCRDIT",
+    "NAME":"SEMANTICS",
+    "POSITION":38,
+    "VALUE":""
+   },
+   {
+    "STRUCOBJN":"ZETR_DDL_I_PREP_LEDGER_DETAIL",
+    "LFIELDNAME":"TCRDIT",
+    "NAME":"SEMANTICS.AMOUNT.CURRENCYCODE",
+    "POSITION":39,
     "VALUE":"'waers'"
    },
    {
     "STRUCOBJN":"ZETR_DDL_I_PREP_LEDGER_DETAIL",
     "LFIELDNAME":"TCRDIT",
+    "NAME":"UI",
+    "POSITION":35,
+    "VALUE":""
+   },
+   {
+    "STRUCOBJN":"ZETR_DDL_I_PREP_LEDGER_DETAIL",
+    "LFIELDNAME":"TCRDIT",
+    "NAME":"UI.IDENTIFICATION$1$.LABEL",
+    "POSITION":37,
+    "VALUE":"'Alacak Toplamı Tutarı'"
+   },
+   {
+    "STRUCOBJN":"ZETR_DDL_I_PREP_LEDGER_DETAIL",
+    "LFIELDNAME":"TCRDIT",
+    "NAME":"UI.IDENTIFICATION$1$.POSITION",
+    "POSITION":36,
+    "VALUE":"7"
+   },
+   {
+    "STRUCOBJN":"ZETR_DDL_I_PREP_LEDGER_DETAIL",
+    "LFIELDNAME":"TDEBIT",
+    "NAME":"SEMANTICS",
+    "POSITION":33,
+    "VALUE":""
+   },
+   {
+    "STRUCOBJN":"ZETR_DDL_I_PREP_LEDGER_DETAIL",
+    "LFIELDNAME":"TDEBIT",
+    "NAME":"SEMANTICS.AMOUNT.CURRENCYCODE",
+    "POSITION":34,
+    "VALUE":"'waers'"
+   },
+   {
+    "STRUCOBJN":"ZETR_DDL_I_PREP_LEDGER_DETAIL",
+    "LFIELDNAME":"TDEBIT",
+    "NAME":"UI",
+    "POSITION":30,
+    "VALUE":""
+   },
+   {
+    "STRUCOBJN":"ZETR_DDL_I_PREP_LEDGER_DETAIL",
+    "LFIELDNAME":"TDEBIT",
+    "NAME":"UI.IDENTIFICATION$1$.LABEL",
+    "POSITION":32,
+    "VALUE":"'Borç Toplamı Tutarı'"
+   },
+   {
+    "STRUCOBJN":"ZETR_DDL_I_PREP_LEDGER_DETAIL",
+    "LFIELDNAME":"TDEBIT",
+    "NAME":"UI.IDENTIFICATION$1$.POSITION",
+    "POSITION":31,
+    "VALUE":"6"
+   },
+   {
+    "STRUCOBJN":"ZETR_DDL_I_PREP_LEDGER_DETAIL",
+    "LFIELDNAME":"TPART",
     "NAME":"UI",
     "POSITION":43,
     "VALUE":""
    },
    {
     "STRUCOBJN":"ZETR_DDL_I_PREP_LEDGER_DETAIL",
-    "LFIELDNAME":"TCRDIT",
+    "LFIELDNAME":"TPART",
     "NAME":"UI.IDENTIFICATION$1$.LABEL",
-    "POSITION":47,
-    "VALUE":"'Alacak Toplamı Tutarı'"
-   },
-   {
-    "STRUCOBJN":"ZETR_DDL_I_PREP_LEDGER_DETAIL",
-    "LFIELDNAME":"TCRDIT",
-    "NAME":"UI.IDENTIFICATION$1$.POSITION",
-    "POSITION":46,
-    "VALUE":"7"
-   },
-   {
-    "STRUCOBJN":"ZETR_DDL_I_PREP_LEDGER_DETAIL",
-    "LFIELDNAME":"TCRDIT",
-    "NAME":"UI.LINEITEM$1$.LABEL",
     "POSITION":45,
-    "VALUE":"'Alacak Toplamı Tutarı'"
+    "VALUE":"'Toplam Parça Sayıs'"
    },
    {
     "STRUCOBJN":"ZETR_DDL_I_PREP_LEDGER_DETAIL",
-    "LFIELDNAME":"TCRDIT",
-    "NAME":"UI.LINEITEM$1$.POSITION",
+    "LFIELDNAME":"TPART",
+    "NAME":"UI.IDENTIFICATION$1$.POSITION",
     "POSITION":44,
-    "VALUE":"7"
-   },
-   {
-    "STRUCOBJN":"ZETR_DDL_I_PREP_LEDGER_DETAIL",
-    "LFIELDNAME":"TDEBIT",
-    "NAME":"SEMANTICS",
-    "POSITION":41,
-    "VALUE":""
-   },
-   {
-    "STRUCOBJN":"ZETR_DDL_I_PREP_LEDGER_DETAIL",
-    "LFIELDNAME":"TDEBIT",
-    "NAME":"SEMANTICS.AMOUNT.CURRENCYCODE",
-    "POSITION":42,
-    "VALUE":"'waers'"
-   },
-   {
-    "STRUCOBJN":"ZETR_DDL_I_PREP_LEDGER_DETAIL",
-    "LFIELDNAME":"TDEBIT",
-    "NAME":"UI",
-    "POSITION":36,
-    "VALUE":""
-   },
-   {
-    "STRUCOBJN":"ZETR_DDL_I_PREP_LEDGER_DETAIL",
-    "LFIELDNAME":"TDEBIT",
-    "NAME":"UI.IDENTIFICATION$1$.LABEL",
-    "POSITION":40,
-    "VALUE":"'Borç Toplamı Tutarı'"
-   },
-   {
-    "STRUCOBJN":"ZETR_DDL_I_PREP_LEDGER_DETAIL",
-    "LFIELDNAME":"TDEBIT",
-    "NAME":"UI.IDENTIFICATION$1$.POSITION",
-    "POSITION":39,
-    "VALUE":"6"
-   },
-   {
-    "STRUCOBJN":"ZETR_DDL_I_PREP_LEDGER_DETAIL",
-    "LFIELDNAME":"TDEBIT",
-    "NAME":"UI.LINEITEM$1$.LABEL",
-    "POSITION":38,
-    "VALUE":"'Borç Toplamı Tutarı'"
-   },
-   {
-    "STRUCOBJN":"ZETR_DDL_I_PREP_LEDGER_DETAIL",
-    "LFIELDNAME":"TDEBIT",
-    "NAME":"UI.LINEITEM$1$.POSITION",
-    "POSITION":37,
-    "VALUE":"6"
-   },
-   {
-    "STRUCOBJN":"ZETR_DDL_I_PREP_LEDGER_DETAIL",
-    "LFIELDNAME":"TPART",
-    "NAME":"UI",
-    "POSITION":55,
-    "VALUE":""
-   },
-   {
-    "STRUCOBJN":"ZETR_DDL_I_PREP_LEDGER_DETAIL",
-    "LFIELDNAME":"TPART",
-    "NAME":"UI.IDENTIFICATION$1$.LABEL",
-    "POSITION":59,
-    "VALUE":"'Toplam Parça Sayıs'"
-   },
-   {
-    "STRUCOBJN":"ZETR_DDL_I_PREP_LEDGER_DETAIL",
-    "LFIELDNAME":"TPART",
-    "NAME":"UI.IDENTIFICATION$1$.POSITION",
-    "POSITION":58,
-    "VALUE":"9"
-   },
-   {
-    "STRUCOBJN":"ZETR_DDL_I_PREP_LEDGER_DETAIL",
-    "LFIELDNAME":"TPART",
-    "NAME":"UI.LINEITEM$1$.LABEL",
-    "POSITION":57,
-    "VALUE":"'Toplam Parça Sayıs'"
-   },
-   {
-    "STRUCOBJN":"ZETR_DDL_I_PREP_LEDGER_DETAIL",
-    "LFIELDNAME":"TPART",
-    "NAME":"UI.LINEITEM$1$.POSITION",
-    "POSITION":56,
     "VALUE":"9"
    }
   ]
@@ -656,22 +530,8 @@
    {
     "STRUCOBJN":"ZETR_DDL_I_PREP_LEDGER_DETAIL",
     "DDLANGUAGE":"E",
-    "LFIELDNAME":"SLINEN",
-    "NAME":"UI.LINEITEM$1$.LABEL",
-    "TEXT":"Mali Yıl Satır Bilgis"
-   },
-   {
-    "STRUCOBJN":"ZETR_DDL_I_PREP_LEDGER_DETAIL",
-    "DDLANGUAGE":"E",
     "LFIELDNAME":"SPART",
     "NAME":"UI.IDENTIFICATION$1$.LABEL",
-    "TEXT":"Mali Yıl Parça Bilgisi"
-   },
-   {
-    "STRUCOBJN":"ZETR_DDL_I_PREP_LEDGER_DETAIL",
-    "DDLANGUAGE":"E",
-    "LFIELDNAME":"SPART",
-    "NAME":"UI.LINEITEM$1$.LABEL",
     "TEXT":"Mali Yıl Parça Bilgisi"
    },
    {
@@ -684,22 +544,8 @@
    {
     "STRUCOBJN":"ZETR_DDL_I_PREP_LEDGER_DETAIL",
     "DDLANGUAGE":"E",
-    "LFIELDNAME":"STCRDIT",
-    "NAME":"UI.LINEITEM$1$.LABEL",
-    "TEXT":"Mizan Alacak Toplam Tutarı"
-   },
-   {
-    "STRUCOBJN":"ZETR_DDL_I_PREP_LEDGER_DETAIL",
-    "DDLANGUAGE":"E",
     "LFIELDNAME":"STDEBIT",
     "NAME":"UI.IDENTIFICATION$1$.LABEL",
-    "TEXT":"Mizan Borç Toplam Tutarı"
-   },
-   {
-    "STRUCOBJN":"ZETR_DDL_I_PREP_LEDGER_DETAIL",
-    "DDLANGUAGE":"E",
-    "LFIELDNAME":"STDEBIT",
-    "NAME":"UI.LINEITEM$1$.LABEL",
     "TEXT":"Mizan Borç Toplam Tutarı"
    },
    {
@@ -712,22 +558,8 @@
    {
     "STRUCOBJN":"ZETR_DDL_I_PREP_LEDGER_DETAIL",
     "DDLANGUAGE":"E",
-    "LFIELDNAME":"SYEVNO",
-    "NAME":"UI.LINEITEM$1$.LABEL",
-    "TEXT":"Mali Yıl Yeymiye Bilgisi"
-   },
-   {
-    "STRUCOBJN":"ZETR_DDL_I_PREP_LEDGER_DETAIL",
-    "DDLANGUAGE":"E",
     "LFIELDNAME":"TCRDIT",
     "NAME":"UI.IDENTIFICATION$1$.LABEL",
-    "TEXT":"Alacak Toplamı Tutarı"
-   },
-   {
-    "STRUCOBJN":"ZETR_DDL_I_PREP_LEDGER_DETAIL",
-    "DDLANGUAGE":"E",
-    "LFIELDNAME":"TCRDIT",
-    "NAME":"UI.LINEITEM$1$.LABEL",
     "TEXT":"Alacak Toplamı Tutarı"
    },
    {
@@ -740,22 +572,8 @@
    {
     "STRUCOBJN":"ZETR_DDL_I_PREP_LEDGER_DETAIL",
     "DDLANGUAGE":"E",
-    "LFIELDNAME":"TDEBIT",
-    "NAME":"UI.LINEITEM$1$.LABEL",
-    "TEXT":"Borç Toplamı Tutarı"
-   },
-   {
-    "STRUCOBJN":"ZETR_DDL_I_PREP_LEDGER_DETAIL",
-    "DDLANGUAGE":"E",
     "LFIELDNAME":"TPART",
     "NAME":"UI.IDENTIFICATION$1$.LABEL",
-    "TEXT":"Toplam Parça Sayıs"
-   },
-   {
-    "STRUCOBJN":"ZETR_DDL_I_PREP_LEDGER_DETAIL",
-    "DDLANGUAGE":"E",
-    "LFIELDNAME":"TPART",
-    "NAME":"UI.LINEITEM$1$.LABEL",
     "TEXT":"Toplam Parça Sayıs"
    }
   ]
@@ -834,7 +652,7 @@
     "STRUCOBJN":"ZETR_DDL_I_PREP_LEDGER_DETAIL",
     "NAME":"UI.HEADERINFO.TYPENAMEPLURAL",
     "POSITION":7,
-    "VALUE":"'Prepare Ledger'"
+    "VALUE":"'Prepare Ledger Details'"
    }
   ]
  },
@@ -858,7 +676,7 @@
     "STRUCOBJN":"ZETR_DDL_I_PREP_LEDGER_DETAIL",
     "DDLANGUAGE":"E",
     "NAME":"UI.HEADERINFO.TYPENAMEPLURAL",
-    "TEXT":"Prepare Ledger"
+    "TEXT":"Prepare Ledger Details"
    }
   ]
  },

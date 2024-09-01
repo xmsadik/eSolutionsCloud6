@@ -5,6 +5,7 @@
       "t_cash_post    TYPE SORTED TABLE OF tcj_positions WITH NON-UNIQUE KEY comp_code cajo_number posting_number WITH HEADER LINE,
       t_bkpf_add     TYPE TABLE OF ty_bkpf, "OCCURS 0 WITH HEADER LINE,
       lt_bseg        TYPE SORTED TABLE OF ty_bseg WITH NON-UNIQUE KEY bukrs belnr gjahr buzei hkont lokkt gsber kunnr lifnr, "WITH HEADER LINE,
+      lt_new_bseg    TYPE SORTED TABLE OF ty_bseg WITH NON-UNIQUE KEY bukrs belnr gjahr buzei hkont lokkt gsber kunnr lifnr, "WITH HEADER LINE,
       ls_bseg        LIKE LINE OF lt_bseg,
       lt_bseg_tmp    TYPE TABLE OF ty_bseg, "bseg OCCURS 0 WITH HEADER LINE,
       ls_bseg_tmp    TYPE  ty_bseg,
@@ -173,12 +174,44 @@
                              AND belnr EQ ls_bkpf-belnr
                              AND gjahr EQ ls_bkpf-gjahr.
 
-*            SELECT * !!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+*            SELECT *
 *              FROM bseg
 *              APPENDING TABLE lt_bseg
 *             WHERE bukrs EQ t_bkpf-bukrs
 *               AND belnr EQ t_bkpf-belnr
 *               AND gjahr EQ t_bkpf-gjahr.
+
+*Gerek var mı test ederken bak @YiğitcanÖ.
+
+**            SELECT companycode AS bukrs,
+**                       glaccount  AS hkont,
+**                       alternativeglaccount  AS lokkt,
+**                       fiscalyear  AS gjahr,
+**                       accountingdocument  AS belnr,
+**                       ledgergllineitem  AS docln,
+**                       postingdate  AS budat,
+**                       documentdate  AS bldat,
+**                       transactioncurrency  AS waers,
+**                       accountingdocumenttype  AS blart,
+**                       taxcode  AS mwskz,
+**                       amountincompanycodecurrency    AS dmbtr,
+**                       supplier  AS lifnr,
+**                       customer  AS kunnr,
+**                       financialaccounttype  AS koart,
+**                       documentitemtext  AS sgtxt,
+**                       debitcreditcode AS shkzg,
+**                       amountinglobalcurrency AS dmbe2,
+**                       amountinglobalcurrency AS dmbe3,
+**                       amountintransactioncurrency AS wrbtr
+**            FROM i_journalentryitem
+**            WHERE companycode        = @ls_bkpf-bukrs
+**              AND accountingdocument = @ls_bkpf-belnr
+**              AND fiscalyear         = @ls_bkpf-gjahr
+**              INTO CORRESPONDING FIELDS OF TABLE @lt_new_bseg.
+**
+**            INSERT LINES OF lt_new_bseg INTO TABLE lt_bseg.
+
+*Gerek var mı test ederken bak @YiğitcanÖ.
 
             CLEAR ls_colitm.
             MOVE-CORRESPONDING ls_bkpf TO ls_colitm.
@@ -270,7 +303,7 @@
     ELSE.
       DELETE lt_bseg WHERE hkont NOT IN tr_hkont.
     ENDIF.
-    DELETE lt_bseg WHERE gsber NOT IN tr_gsber.
+*    DELETE lt_bseg WHERE gsber NOT IN tr_gsber. "Kullanılmıyor @Yiğitcan
     IF lt_bseg[] IS INITIAL.
       EXIT.
     ENDIF.
@@ -733,6 +766,7 @@
         ENDLOOP.
       ENDIF.
 
+
 *      READ TABLE t_blart WITH KEY blart = t_bkpf-blart.
 *
 *      LOOP AT t_cash WHERE blart = t_bkpf-blart.
@@ -751,50 +785,53 @@
 *        ENDIF.
 *      ENDLOOP.
 
-*      IF t_blart-gbtur EQ 'check' OR t_blart-gbtur EQ 'voucher'.
-*        CLEAR lv_count.
-*        LOOP AT lt_bsed WHERE bukrs EQ t_bkpf-bukrs
-*                          AND belnr EQ t_bkpf-belnr
-*                          AND gjahr EQ t_bkpf-gjahr
-*                          AND boeno NE space.
-*          ADD 1 TO lv_count.
-*        ENDLOOP.
-*
-*        IF lv_count EQ 1.
-*          t_bkpf-xblnr = lt_bsed-boeno.
-*        ELSEIF lv_count GT 1.
-*          IF t_blart-gbtur EQ 'check'.
-*            t_blart-blart_t = 'Çek Bordrosu'.
-*          ELSE.
-*            t_blart-blart_t = 'Senet Bordrosu'.
-*          ENDIF.
-*
-*          t_blart-gbtur = 'other'.
-*        ELSE.
-*          CLEAR lv_count.
+
+      READ TABLE t_blart ASSIGNING FIELD-SYMBOL(<fs_blart>) WITH KEY blart = ls_bkpf-blart.
+
+      IF <fs_blart>-gbtur EQ 'check' OR <fs_blart>-gbtur EQ 'voucher'.
+        CLEAR lv_count.
+        LOOP AT lt_bsed INTO DATA(LS_BSED) WHERE bukrs EQ ls_bkpf-bukrs
+                                              AND belnr EQ ls_bkpf-belnr
+                                              AND gjahr EQ ls_bkpf-gjahr
+                                              AND boeno NE space.
+          ADD 1 TO lv_count.
+        ENDLOOP.
+
+        IF lv_count EQ 1.
+          ls_bkpf-xblnr = LS_BSED-boeno.
+        ELSEIF lv_count GT 1.
+          IF <fs_blart>-gbtur EQ 'check'.
+            <fs_blart>-blart_t = 'Çek Bordrosu'.
+          ELSE.
+            <fs_blart>-blart_t = 'Senet Bordrosu'.
+          ENDIF.
+
+          <fs_blart>-gbtur = 'other'.
+        ELSE.
+          CLEAR lv_count.
 *          LOOP AT lt_payr WHERE zbukr = t_bkpf-bukrs
 *                            AND vblnr = t_bkpf-belnr
 *                            AND gjahr = t_bkpf-gjahr.
 *            ADD 1 TO lv_count.
 *          ENDLOOP.
-*
-*          IF lv_count EQ 1.
-*            t_bkpf-xblnr = lt_payr-chect.
-*          ELSEIF lv_count > 1.
-*            t_bkpf-xblnr = lt_payr-vblnr.
-*
-*            IF t_blart-gbtur EQ 'check'.
-*              t_blart-blart_t = 'Çek Bordrosu'.
-*            ELSE.
-*              t_blart-blart_t = 'Senet Bordrosu'.
-*            ENDIF.
-*
-*            t_blart-gbtur = 'other'.
-*          ENDIF.
-*        ENDIF.
-*      ENDIF.
 
-*      IF iv_f51_blart EQ t_bkpf-blart AND
+          IF lv_count EQ 1.
+*            t_bkpf-xblnr = lt_payr-chect.
+          ELSEIF lv_count > 1.
+*            t_bkpf-xblnr = lt_payr-vblnr.
+
+            IF <fs_blart>-gbtur EQ 'check'.
+              <fs_blart>-blart_t = 'Çek Bordrosu'.
+            ELSE.
+              <fs_blart>-blart_t = 'Senet Bordrosu'.
+            ENDIF.
+
+            <fs_blart>-gbtur = 'other'.
+          ENDIF.
+        ENDIF.
+      ENDIF.
+
+*      IF iv_f51_blart EQ t_bkpf-blart AND "İletilmedi @YiğitcanÖ.
 *         iv_f51_tcode EQ t_bkpf-tcode.
 *
 *        IF lv_satici EQ 'X' AND lv_anahesap EQ 'X'.

@@ -8,6 +8,7 @@ authorization master ( instance )
 //etag master <field_name>
 {
   association _PrepLedgerDetail;
+  association _SetPartLedger;
   //  create;
   //  update;
   //  delete;
@@ -25,5 +26,17 @@ authorization dependent by _PrepLedger
   //  update;
   //  delete;
   field ( readonly ) bukrs, gjahr, monat;
+  association _PrepLedger;
+}
+
+define behavior for ZETR_DDL_I_setpart_ledger //alias _prepLedgerDetail
+//late numbering
+lock dependent by _PrepLedger
+authorization dependent by _PrepLedger
+//etag master <field_name>
+{
+  //  update;
+  //  delete;
+  field ( readonly ) bukrs, gjahr, monat,datbi,partn;
   association _PrepLedger;
 }

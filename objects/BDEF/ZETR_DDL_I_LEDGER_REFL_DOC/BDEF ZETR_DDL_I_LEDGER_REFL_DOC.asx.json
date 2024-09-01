@@ -1,5 +1,17 @@
 [
  {
+  "table":"BDEF_WBDATA",
+  "data":
+  [
+   {
+    "BDEF":"ZETR_DDL_I_LEDGER_REFL_DOC",
+    "R3STATE":"A",
+    "KIND":"T",
+    "VALUE":"Managed"
+   }
+  ]
+ },
+ {
   "table":"TADIR",
   "data":
   [

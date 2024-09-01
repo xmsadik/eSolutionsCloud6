@@ -7,9 +7,9 @@
     "SRVDNAME":"ZETR_DDL_D_PREP_LEDGER",
     "VERSION":"A",
     "CHANGED_BY":"SAP_CUSTOMER",
-    "CHANGED_ON":"2024-08-21",
-    "CHANGED_AT":"07:05:31",
-    "DT_UUID":"055B4DF6A2A01EEF97F1781AC760C15C",
+    "CHANGED_ON":"2024-08-25",
+    "CHANGED_AT":"00:28:02",
+    "DT_UUID":"055B4DF6A2A01EEF98CF1C6C11394165",
     "SOURCE_ORIGIN":"0",
     "SRVD_SOURCE_TYPE":"S",
     "ABAP_LANGUAGE_VERSION":"5"
@@ -35,7 +35,7 @@
    {
     "SRVDNAME":"ZETR_DDL_D_PREP_LEDGER",
     "VERSION":"A",
-    "SOURCE":"@EndUserText.label: 'Prepare Ledger'\r\ndefine service Zetr_ddl_d_prep_ledger {\r\n  expose zetr_ddl_i_prep_ledger        as PrepLedger;\r\n  expose zetr_ddl_i_prep_ledger_detail as PrepLedgerDetail;\r\n}"
+    "SOURCE":"@EndUserText.label: 'Prepare Ledger'\r\ndefine service Zetr_ddl_d_prep_ledger {\r\n  expose zetr_ddl_i_prep_ledger        as PrepLedger;\r\n  expose zetr_ddl_i_prep_ledger_detail as PrepLedgerDetail;\r\n  expose ZETR_DDL_I_setpart_ledger     as SetPartLedger;\r\n}"
    }
   ]
  },
@@ -83,6 +83,15 @@
     "EXPOSED_ALIAS":"PREPLEDGERDETAIL",
     "EXPOSED_ALIAS_RAW":"PrepLedgerDetail",
     "INCL_SERVICE":""
+   },
+   {
+    "SRVDNAME":"ZETR_DDL_D_PREP_LEDGER",
+    "SERVICE":"ZETR_DDL_D_PREP_LEDGER",
+    "EXPOSED_ARTIFACT":"ZETR_DDL_I_SETPART_LEDGER",
+    "EXPOSED_ARTIFACT_TYPE":"E",
+    "EXPOSED_ALIAS":"SETPARTLEDGER",
+    "EXPOSED_ALIAS_RAW":"SetPartLedger",
+    "INCL_SERVICE":""
    }
   ]
  },
@@ -95,8 +104,8 @@
     "SERVICE":"ZETR_DDL_D_PREP_LEDGER",
     "SERVICE_RAW":"Zetr_ddl_d_prep_ledger",
     "SOURCE_TYPE":"S",
-    "DT_UUID":"055B4DF6A2A01EEF97F1781AC760C15C",
-    "RT_HASH":"C9EFB89DD0CA1DD4E595B178ED5BBB188686A9BF",
+    "DT_UUID":"055B4DF6A2A01EEF98CF1C6C11394165",
+    "RT_HASH":"3C6F79F50EE83538302F8E025F2E8A140AD26DB9",
     "GEN_VERSION":"0"
    }
   ]

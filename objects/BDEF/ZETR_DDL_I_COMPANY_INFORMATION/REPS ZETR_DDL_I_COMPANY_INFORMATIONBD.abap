@@ -115,6 +115,7 @@ authorization dependent by _companyInformation
       Username                     = uname;
       OutgoingInvoiceStatusChange  = ogisc;
       OutgoingDeliveryStatusChange = ogdsc;
+      IncomingInvoicePurcGrpChange = icipc;
     }
   update;
   delete;

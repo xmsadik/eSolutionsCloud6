@@ -35,8 +35,8 @@
     "CRELEASE":"",
     "DELFLAG":"",
     "TRANSLTTXT":"",
-    "CREATED_ON":"2024-08-08",
-    "CHECK_DATE":"2024-08-08",
+    "CREATED_ON":"2024-08-26",
+    "CHECK_DATE":"2024-08-26",
     "CHECK_CFG":""
    }
   ]
@@ -65,7 +65,7 @@
    {
     "NAME":"ZETR_DDL_I_PREP_LEDGER========BD",
     "SPRSL":"E",
-    "TEXT":"Prepare Ledfer"
+    "TEXT":"Prepare Ledger"
    }
   ]
  }

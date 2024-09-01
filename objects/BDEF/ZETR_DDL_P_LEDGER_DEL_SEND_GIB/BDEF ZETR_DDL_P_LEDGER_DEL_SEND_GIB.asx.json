@@ -1,5 +1,17 @@
 [
  {
+  "table":"BDEF_WBDATA",
+  "data":
+  [
+   {
+    "BDEF":"ZETR_DDL_P_LEDGER_DEL_SEND_GIB",
+    "R3STATE":"A",
+    "KIND":"T",
+    "VALUE":"BehaviorProjection"
+   }
+  ]
+ },
+ {
   "table":"TADIR",
   "data":
   [

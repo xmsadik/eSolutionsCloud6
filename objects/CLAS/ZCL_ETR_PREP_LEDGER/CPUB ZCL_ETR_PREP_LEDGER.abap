@@ -5,4 +5,6 @@ CLASS zcl_etr_prep_ledger DEFINITION
 ********
   PUBLIC SECTION.
 
+
+
     INTERFACES if_rap_query_provider .

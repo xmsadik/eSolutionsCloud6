@@ -228,14 +228,25 @@ CLASS zcl_etr_ledger_create DEFINITION
              racct  TYPE saknr,
            END OF ty_faglflexa.
 
-    TYPES: tt_hkont TYPE TABLE OF ty_hkont WITH EMPTY KEY.
-    TYPES: tt_gsber TYPE TABLE OF ty_gsber WITH EMPTY KEY.
-    TYPES: tt_bkpf TYPE TABLE OF ty_bkpf WITH EMPTY KEY.
-    TYPES: tt_dybel TYPE TABLE OF ty_dybel WITH EMPTY KEY.
-    TYPES: tt_blryb TYPE TABLE OF ty_blryb WITH EMPTY KEY.
-    TYPES: tt_defky TYPE TABLE OF ty_defky WITH EMPTY KEY.
-    TYPES: tt_skb1 TYPE TABLE OF ty_skb1 WITH EMPTY KEY.
+    TYPES: BEGIN OF ty_blart,
+             blart   TYPE blart,
+             blart_t TYPE zetr_e_edf_ledger_on_defin,
+             gbtur   TYPE zetr_e_gib_doc_type,
+             oturu   TYPE zetr_e_payment_term,
+             gibbta  TYPE zetr_e_gibbta,
+             ocblg   TYPE zetr_e_ocblg,
+           END OF ty_blart.
+
+
+    TYPES: tt_hkont TYPE TABLE OF ty_hkont.
+    TYPES: tt_gsber TYPE TABLE OF ty_gsber.
+    TYPES: tt_bkpf  TYPE TABLE OF ty_bkpf .
+    TYPES: tt_dybel TYPE TABLE OF ty_dybel.
+    TYPES: tt_blryb TYPE TABLE OF ty_blryb .
+    TYPES: tt_defky TYPE TABLE OF ty_defky .
+    TYPES: tt_skb1 TYPE TABLE OF ty_skb1 .
     TYPES: tt_colitem TYPE SORTED TABLE OF ty_colitem WITH UNIQUE KEY bukrs belnr gjahr buzei.
+    TYPES : tt_blart TYPE TABLE OF ty_blart.
 
 
 
@@ -259,9 +270,10 @@ CLASS zcl_etr_ledger_create DEFINITION
         t_copy_belnr    TYPE tt_blryb
 *        T_CASH
         tr_hkont        TYPE tt_hkont
-        tr_gsber        TYPE tt_gsber
-        t_ledger        TYPE tt_defky
+*        tr_gsber        TYPE tt_gsber "Kullanılmıyor @YiğitcanÖ.
+*        t_ledger        TYPE tt_defky "Kullanılmıyor @YiğitcanÖ.
         t_skb1          TYPE tt_skb1
+        t_blart         TYPE tt_blart
 
       .
 

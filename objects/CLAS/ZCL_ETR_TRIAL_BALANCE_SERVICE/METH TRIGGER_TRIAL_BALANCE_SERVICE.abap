@@ -84,6 +84,7 @@
             WHEN 'DebitAmountInCoCodeCrcy'.
               rs_balance-debits_per        = <lfs_response_service>-value + rs_balance-debits_per.
             WHEN 'CreditAmountInCoCodeCrcy'.
+            rs_balance-credit_per          = <lfs_response_service>-value + rs_balance-credit_per.
           ENDCASE.
         ENDLOOP.
         rs_balance-comp_code = iv_company_code.
